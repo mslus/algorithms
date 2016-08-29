@@ -25,11 +25,11 @@ bool permutation_nosort(string s1, string s2){
 
 	if(s1.length() != s2.length()) return false;
 
-	for(int i = 0; i < s1.length(); i++)
-		m[s1[i]]++;
+	for(char c : s1)
+		m[c]++;
 
-	for(int i = 0; i < s2.length(); i++)
-		m[s2[i]]--;
+	for(char c : s2)
+		m[c]--;
 
 	for(int i = 0; i < m.size(); i++)
 		if(m[i] != 0) return false;

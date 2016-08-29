@@ -17,11 +17,11 @@ bool uniquechars(string s){
 	//for reference only
 	cout << s << " ";
 
-	for(int i = 0; i < s.length(); i++){
-		if(m[s[i]])
+	for(char c : s){
+		if(m[c])
 			return false;
 		else
-			m[s[i]] = true;
+			m[c] = true;
 	}
 
 	return true;

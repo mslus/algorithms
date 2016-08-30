@@ -29,6 +29,15 @@ void dfs(int start, const vector< vector<int> > &nb){
 	}
 }
 
+void dfs_rec(int start, const vector< vector<int> > &nb, vector<bool> &visited){
+	if(!visited[start]){
+		cout << start << endl;	
+		visited[start] = true;
+		for(vector<int>::const_iterator it = nb[start].begin(); it != nb[start].end(); it++)
+			dfs_rec(*it,nb,visited);
+	}
+}
+
 int main(){
 	int n,k;
 	int x,y;
@@ -42,7 +51,13 @@ int main(){
 		nb[y].push_back(x);
 	}
 
+	cout << "stack based: " << endl;
 	dfs(0,nb);
+	cout << "recursive:" << endl;
+	vector<bool> visited(nb.size(),false);
+	dfs_rec(0,nb,visited);
+	
+
 
 	return 0;
 }

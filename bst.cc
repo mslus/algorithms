@@ -18,6 +18,24 @@ public:
 	}
 };
 
+
+class node_parent{
+public:
+	int n;
+	node *left;
+	node *right;
+	node *parent;
+	node *self;
+	node_parent(int info, node *nl, node *nr, node* s, node *np) {
+		n = info;
+		left = nl;
+		right = nr;
+		parent = np;
+		self = s;
+	}
+
+};
+
 class bst {
 	node *root;
 
@@ -106,6 +124,7 @@ public:
 		node *n;
 		node *m;
 		node *o;
+		int tmp;
 
 		if(root == nullptr) return false;
 		if(root->n == info) {
@@ -117,11 +136,15 @@ public:
 				n = root;
 				root = root->left;
 				delete n;
+			}else if(root->left == nullptr && root->right == nullptr){
+				delete root;
+				root = nullptr;
 			}else{ // find smallest node larger than info
 				n = root->right;
 				while(n->left != nullptr) n = n->left;
-				root->n = n->n;
-				delete n;
+				tmp = n->n;
+				remove(n->n);
+				root->n = tmp;				
 			}
 		}else{
 			n = findParent(info);
@@ -133,36 +156,39 @@ public:
 			}
 
 			if(m->left == nullptr && m->right != nullptr){
-				o = m;
 				if(m == n->left) n->left = m->right;
 				else n->right = m->right;
-				delete o;
+				delete m;
 			}else if(m->left != nullptr && m->right == nullptr){
-				o = m;
 				if(m == n->left) n->left = m->left;
 				else n->right = m->left;
-				delete o;
+				delete m;
+			}else if(m->left == nullptr && m->right == nullptr){
+				if(m == n->left) n->left = nullptr;
+				else n->right = nullptr;
+				delete m;
 			}else{ // find smallest node larger than info
 				o = m->right;
 				while(o->left != nullptr) o = o->left;
-				m->n = o->n;
-				delete o;
+				tmp = o->n;				
+				remove(tmp);
+				m->n = tmp;
 			}
 		}
 		return true;
 	}
 
 	void printtree(){
-		queue<node*> q;
-		node *n;
-		q.push(root);
+		queue<node_parent> q;
+		q.push(node_parent(root->n, root->left, root->right, root, nullptr));
 		while(!q.empty()){
-			n = q.front();
+			node_parent n = q.front();
 			q.pop();
 
-			cout << n->n << endl;
-			if(n->left != nullptr) q.push(n->left);
-			if(n->right != nullptr) q.push(n->right);
+			if (n.parent != nullptr)
+				cout << n.parent->n << " <----" << n.n << endl;
+			if(n.left != nullptr) q.push(node_parent(n.left->n, n.left->left, n.left->right, n.left, n.self));
+			if(n.right != nullptr) q.push(node_parent(n.right->n, n.right->left, n.right->right, n.right, n.self));
 		}
 	}
 };
@@ -172,12 +198,16 @@ public:
 int main(){
 	bst B;
 
-	B.add(5);
-	B.add(6);
+	B.add(8);
+	B.add(9);
 	B.add(4);
 	B.add(1);
+	B.add(7);
+	B.add(6);
+	B.add(5);
 	B.add(10);
 	B.printtree();
+	cout << "-----" << endl;
 
 	B.remove(4);
 	B.printtree();

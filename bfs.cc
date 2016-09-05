@@ -8,45 +8,44 @@
 
 using namespace std;
 
+void bfs(int start, const vector<vector<int> > &nb) {
 
-
-void bfs(int start, const vector< vector<int> > &nb){
-
-	vector<bool> visited(nb.size(),false);
+	vector<bool> visited(nb.size(), false);
 	queue<int> st;
 
 	st.push(start);
 	visited[start] = true;
 
-	while(!st.empty()){
+	while (!st.empty()) {
 		int node = st.front();
 		st.pop();
-		
+
 		cout << node << endl;
-				
-		for(vector<int>::const_iterator it = nb[node].begin(); it != nb[node].end(); it++){
-			if(!visited[*it]){ 
-				st.push(*it);		
+
+		for (vector<int>::const_iterator it = nb[node].begin();
+				it != nb[node].end(); it++) {
+			if (!visited[*it]) {
+				st.push(*it);
 				visited[*it] = true;
 			}
 		}
 	}
 }
 
-int main(){
-	int n,k;
-	int x,y;
+int main() {
+	int n, k;
+	int x, y;
 
 	cin >> n >> k;
-	vector< vector<int> > nb(n);
-	
-	for(int i = 0; i < k; i++){
+	vector < vector<int> > nb(n);
+
+	for (int i = 0; i < k; i++) {
 		cin >> x >> y;
 		nb[x].push_back(y);
 		nb[y].push_back(x);
 	}
 
-	bfs(0,nb);
+	bfs(0, nb);
 
 	return 0;
 }

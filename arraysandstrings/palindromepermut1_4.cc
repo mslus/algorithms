@@ -8,19 +8,18 @@
 #include <string>
 #include <iostream>
 
-
 using namespace std;
 
-bool ispalindrome(string s){
-	vector<int> m(256,0);
+bool ispalindrome(string s) {
+	vector<int> m(256, 0);
 
-	for(int i = 0; i < s.length(); i++)
+	for (int i = 0; i < s.length(); i++)
 		m[s[i]]++;
 
 	bool flag = false;
-	for(int i = 0; i < m.size(); i++)
-		if(m[i] % 2 != 0){
-			if(!flag)
+	for (int i = 0; i < m.size(); i++)
+		if (m[i] % 2 != 0) {
+			if (!flag)
 				flag = true;
 			else
 				return false;
@@ -28,7 +27,7 @@ bool ispalindrome(string s){
 	return true;
 }
 
-int main(){
+int main() {
 
 	cout << ispalindrome("abab") << endl;
 	cout << ispalindrome("ababc") << endl;
@@ -39,6 +38,4 @@ int main(){
 
 	return 0;
 }
-
-
 

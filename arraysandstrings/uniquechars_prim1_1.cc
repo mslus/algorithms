@@ -10,38 +10,28 @@
 
 using namespace std;
 
-
-bool uniquechars(string s){
+bool uniquechars(string s) {
 
 	//for reference only
 	cout << s << " ";
-	sort(s.begin(),s.end());
+	sort(s.begin(), s.end());
 
-	for(int i = 0; i < s.length()-1; i++)
-		if(s[i] == s[i+1])
+	for (int i = 0; i < s.length() - 1; i++)
+		if (s[i] == s[i + 1])
 			return false;
 
 	return true;
 }
 
-int main(){
-	cout <<  uniquechars("abcdfrga") << endl;
-	cout <<  uniquechars("abcdefghty") << endl;
-	cout <<  uniquechars("aaaaaa") << endl;
-	cout <<  uniquechars("") << endl;
-	cout <<  uniquechars("abcabc") << endl;
-	cout <<  uniquechars("zxcvbnmlkjhgfdsA") << endl;
-	cout <<  uniquechars("ABCDEFG") << endl;
+int main() {
+	cout << uniquechars("abcdfrga") << endl;
+	cout << uniquechars("abcdefghty") << endl;
+	cout << uniquechars("aaaaaa") << endl;
+	cout << uniquechars("") << endl;
+	cout << uniquechars("abcabc") << endl;
+	cout << uniquechars("zxcvbnmlkjhgfdsA") << endl;
+	cout << uniquechars("ABCDEFG") << endl;
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
 

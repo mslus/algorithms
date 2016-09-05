@@ -10,32 +10,31 @@
 #include <string>
 #include <vector>
 
-
 using namespace std;
 
-
-string compress(string s){
+string compress(string s) {
 	int i = 0;
 	int k;
 	string result;
 	stringstream ss;
 
-	while(i < s.length()){
+	while (i < s.length()) {
 		k = i;
-		while(s[k] == s[i]) k++;
-		ss << s[i] << (k-i);
-		i=k;
+		while (s[k] == s[i])
+			k++;
+		ss << s[i] << (k - i);
+		i = k;
 	}
 
 	result = ss.str();
 
-	if(result.length() < s.length())
+	if (result.length() < s.length())
 		return result;
 	else
 		return s;
 }
 
-int main(){
+int main() {
 
 	cout << compress("aabccccaddd") << endl;
 	cout << compress("aabccZZZdd") << endl;
@@ -45,6 +44,4 @@ int main(){
 
 	return 0;
 }
-
-
 

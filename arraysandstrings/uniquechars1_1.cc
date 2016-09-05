@@ -10,15 +10,14 @@
 
 using namespace std;
 
-
-bool uniquechars(string s){
-	vector<bool> m(255,false);
+bool uniquechars(string s) {
+	vector<bool> m(255, false);
 
 	//for reference only
 	cout << s << " ";
 
-	for(char c : s){
-		if(m[c])
+	for (char c : s) {
+		if (m[c])
 			return false;
 		else
 			m[c] = true;
@@ -27,19 +26,15 @@ bool uniquechars(string s){
 	return true;
 }
 
-int main(){
-	cout <<  uniquechars("abcdfrga") << endl;
-	cout <<  uniquechars("abcdefghty") << endl;
-	cout <<  uniquechars("aaaaaa") << endl;
-	cout <<  uniquechars("") << endl;
-	cout <<  uniquechars("abcabc") << endl;
-	cout <<  uniquechars("zxcvbnmlkjhgfdsA") << endl;
-	cout <<  uniquechars("ABCDEFG") << endl;
+int main() {
+	cout << uniquechars("abcdfrga") << endl;
+	cout << uniquechars("abcdefghty") << endl;
+	cout << uniquechars("aaaaaa") << endl;
+	cout << uniquechars("") << endl;
+	cout << uniquechars("abcabc") << endl;
+	cout << uniquechars("zxcvbnmlkjhgfdsA") << endl;
+	cout << uniquechars("ABCDEFG") << endl;
 
 	return 0;
 }
-
-
-
-
 

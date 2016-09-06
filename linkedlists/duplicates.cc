@@ -148,15 +148,56 @@ node* findintersection(linkedlist &l1, linkedlist &l2){
 	}
 }
 
-node* findcycle(linkedlist &l){
-	node *r1 = l.head;
-	node *r2 = l.head->next;
-	while(r1 != r2){
-		r1 = r1->next;
-		r2 = r2->next->next;
+node* findintersectionimproved(linkedlist &l1, linkedlist &l2){
+	int counter1 = 0;
+	int counter2 = 0;
+	
+	node *n = l1.head;
+        node *m;
+	while(n != nullptr){
+		n = n->next;
+		counter1++;
 	}
 
-	cout << r1->info << endl;
+	n = l2.head;
+	while(n != nullptr){
+		n = n->next;
+		counter2++;
+	}
+
+	int i = 0;
+	if(counter1 >= counter2){
+		n = l1.head;		
+	        m = l2.head;
+		while(i < (counter1-counter2)){
+			n = n->next;
+			i++;
+		}
+	}else{
+		n = l2.head;
+                m = l1.head;		
+		while(i < (counter2-counter1)){
+			n = n->next;
+			i++;
+		}
+	}
+
+	while(m != n){
+		m = m->next;
+		n = n->next;
+	}
+	
+	return n;
+}
+
+node* findcycle(linkedlist &l){
+	node *r1 = l.head;
+	node *r2 = l.head;
+	do{
+		r1 = r1->next;
+		r2 = r2->next->next;
+	}while(r1 != r2);
+
 
 	r2 = l.head;
 	node *n;
@@ -206,6 +247,7 @@ int main(){
 	removeduplicates(l);
 	l.print();
 
+        cout << "List intersection" << endl;
 	linkedlist l1;
 	l1.add(1);
 	l1.add(2);
@@ -222,17 +264,19 @@ int main(){
 	l1.print();
 	l2.print();
 	cout << findintersection(l1,l2)->info << endl;
+        cout << findintersectionimproved(l1,l2)->info << endl;
 
+	cout << "List with cycle" << endl;
 	linkedlist l3;
-	l3.add(1);
-	l3.add(2);
-	l3.add(3);
-	l3.add(4);
-	l3.add(7);
 	l3.add(8);
-	l3.add(9);
+	l3.add(7);
 	l3.add(6);
-	l3.head->next->next->next->next->next->next->next->next = l3.head->next;
+	l3.add(5);
+	l3.add(4);
+	l3.add(3);
+	l3.add(2);
+	l3.add(1);
+	l3.head->next->next->next->next->next->next->next->next = l3.head->next->next;
 	cout << findcycle(l3)->info << endl;
 
 

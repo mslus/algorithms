@@ -73,7 +73,6 @@ struct bst{
 				n = n->right; 	
 		}
 
-                cout << "**" << n->info << endl;
 
 		if(n->left == nullptr && n->right == nullptr){
 			if(n == root){ 
@@ -96,11 +95,11 @@ struct bst{
 					n->right->parent = n->parent;
 				}else{
 					n->parent->right = n->right;
-					n->right->parent = n->right; 
+					n->right->parent = n->parent; 
 				}
 				delete n;
 			}
-		}else if(n->left != nullptr && n->right != nullptr){
+		}else if(n->left != nullptr && n->right == nullptr){
 			if(n == root){
 				root = n->left;
 				n->left->parent = nullptr;
@@ -111,7 +110,7 @@ struct bst{
 					n->left->parent = n->parent;
 				}else{
 					n->parent->right = n->left;
-					n->left->parent = n->left; 
+					n->left->parent = n->parent; 
 				}
 				delete n;
 			}
@@ -132,8 +131,16 @@ void printtree(node *n){
 	if(n->left != nullptr)
 		printtree(n->left);
 	
-	if(n->parent != nullptr) cout << n->parent->info << "--> ";
-	else cout << "NULL --> ";
+	if(n->parent != nullptr){ 
+		cout << n->parent->info;
+		if(n->parent->left == n) 
+		cout << " L--> ";
+	else
+		cout << " R--> ";
+	}else
+		cout << "NULL --> ";
+	
+
 	cout << n->info << endl;
 	
 	if(n->right != nullptr)
@@ -153,7 +160,9 @@ int main(){
 	b.add(5);
 	printtree(b.root);
 	cout << "*********" << endl;
-	b.del(5);
+	b.del(4);
+	printtree(b.root);
+	cout << "*********" << endl;
 	b.del(6);
 	printtree(b.root);
 

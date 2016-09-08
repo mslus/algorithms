@@ -161,7 +161,7 @@ node* findcycle(linkedlist &l){
 	r2 = l.head;
 	node *n;
 	while(true){
-		n = r1->next;
+		n = r1;
 		do{
 			if(n == r2) return n;
 			n = n->next;
@@ -232,7 +232,7 @@ int main(){
 	l3.add(8);
 	l3.add(9);
 	l3.add(6);
-	l3.head->next->next->next->next->next->next->next->next = l3.head->next;
+	l3.head->next->next->next->next->next->next->next->next = l3.head->next->next;
 	cout << findcycle(l3)->info << endl;
 
 

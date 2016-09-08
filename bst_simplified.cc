@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <vector>
 
 using namespace std;
 
@@ -148,6 +148,23 @@ void printtree(node *n){
 
 }
 
+void inorder(node *n, vector<int> &result){
+
+	if(n->left != nullptr) inorder(n->left, result);
+	result.push_back(n->info);
+	if(n->right != nullptr) inorder(n->right, result);
+}
+
+bool checkifbst(bst T){
+
+	vector<int> nodes;
+	inorder(T.root, nodes);
+	for(int i = 0; i < nodes.size()-1; i++)
+		if(nodes[i+1] <= nodes[i]) return false;
+
+	return true;
+}
+
 
 int main(){
 
@@ -158,11 +175,27 @@ int main(){
 	b.add(6);
 	b.add(7);
 	b.add(5);
+	b.add(10);
+	b.add(8);
 	printtree(b.root);
-	cout << "*********" << endl;
+
+	cout << "test if the tree is a valid BST" << endl;
+	cout << checkifbst(b) << endl;
+	node *n = new node();
+	n->info = 10;
+	n->left = nullptr;
+	n->right = nullptr;
+	b.root->left->right = n;
+        n->parent = b.root->left;
+	cout << checkifbst(b) << endl;
+
+	b.root->left->right = nullptr;
+	delete n;
+
+	cout << "********* delete 4" << endl;
 	b.del(4);
 	printtree(b.root);
-	cout << "*********" << endl;
+	cout << "********* deleet 6" << endl;
 	b.del(6);
 	printtree(b.root);
 

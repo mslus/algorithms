@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <set>
+#include <stack>
 
 using namespace std;
 
@@ -14,6 +17,27 @@ struct bst{
 	node *root;
 	bst(){
 		root = nullptr;
+	}
+
+	bst(const bst& b){
+
+		if(b.root == nullptr){
+			root = nullptr;
+			return;
+		}
+
+		queue<node*> q;
+		node* x;
+
+		q.push(b.root);
+		while(!q.empty()){
+			x = q.front();
+			q.pop();
+
+			add(x->info);
+			if(x->left != nullptr) q.push(x->left);
+			if(x->right != nullptr) q.push(x->right);
+		}
 	}
 
 	bool add(int x){
@@ -155,7 +179,7 @@ void inorder(node *n, vector<int> &result){
 	if(n->right != nullptr) inorder(n->right, result);
 }
 
-bool checkifbst(bst T){
+bool checkifbst(bst &T){
 
 	vector<int> nodes;
 	inorder(T.root, nodes);
@@ -164,6 +188,26 @@ bool checkifbst(bst T){
 
 	return true;
 }
+
+
+void findLeaves(vector<int> &v, node *n){
+	if(n != nullptr){
+		if(n->left == nullptr && n->right == nullptr)
+			v.push_back(n->info);
+		else{
+			findLeaves(v, n->left);
+			findLeaves(v, n->right);
+		}
+	}
+}
+
+vector<int> findLeaves(bst &T){
+	vector<int> result;
+	if(T.root != nullptr)
+		findLeaves(result, T.root);
+	return result;
+}
+
 
 
 int main(){
@@ -178,6 +222,16 @@ int main(){
 	b.add(10);
 	b.add(8);
 	printtree(b.root);
+
+	cout << "Find leaves of the tree" << endl;
+	vector<int> r = findLeaves(b);
+	for(int i = 0; i < r.size(); i++)
+		cout << r[i] << " ";
+	cout << endl;
+
+	cout << "Test copy-constructor" << endl;
+	bst c = b;
+	printtree(c.root);
 
 	cout << "test if the tree is a valid BST" << endl;
 	cout << checkifbst(b) << endl;
@@ -195,9 +249,9 @@ int main(){
 	cout << "********* delete 4" << endl;
 	b.del(4);
 	printtree(b.root);
-	cout << "********* deleet 6" << endl;
+	cout << "********* delete 6" << endl;
 	b.del(6);
 	printtree(b.root);
 
-}
 
+}

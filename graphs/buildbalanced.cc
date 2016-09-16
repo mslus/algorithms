@@ -315,6 +315,37 @@ node* findnode(int x, bst &b){
 	return nullptr;
 }
 
+node* findcommonancestor(node* current, node* n1, node* n2){
+	node *nl, *nr;	
+
+	if(current == n1 || current == n2)
+		 return current;
+	
+
+	if(current->left != nullptr) 
+		nl = findcommonancestor(current->left,n1,n2);
+	else	
+		nl = nullptr;
+	if(current->right != nullptr) 
+		nr = findcommonancestor(current->right,n1,n2);
+	else
+		nr = nullptr;
+
+	if((nl == n1 && nr == n2) || (nl == n2 && nr == n1))
+		return current;
+	else if((nl == n1 && nr == nullptr) || (nl == nullptr && n2 == n1))
+		return n1;
+	else if((nl == n2 && nr == nullptr) || (nl == nullptr && nr == n2))
+		return n2;
+	else if(nl != nullptr)
+		return nl;
+	else if(nr != nullptr)
+		return nr;
+	else
+		return nullptr;
+} 
+
+
 
 int main(){
 
@@ -337,9 +368,14 @@ int main(){
 
 
 	cout << "next 1: " << findsuccessor(findnode(1,b))->info << endl;
-	cout << "next 6: " << findsuccessor(findnode(6,b))->info << endl;
+ 	cout << "next 6: " << findsuccessor(findnode(6,b))->info << endl;
 	cout << "next 9: " << findsuccessor(findnode(9,b))->info << endl;
 	cout << "next 10: " << findsuccessor(findnode(10,b))->info << endl;
+
+	cout << "common ancestor test: " << endl;
+	cout << "nodes 8 10: " << findcommonancestor(b.root, findnode(8,b), findnode(10,b))->info << endl;
+	cout << "nodes 1 23: " << findcommonancestor(b.root, findnode(1,b), findnode(23,b))->info << endl;
+	cout << "nodes 1 4: " << findcommonancestor(b.root, findnode(4,b), findnode(1,b))->info << endl;
 
 	cout << "Tree height: " << computetreeheight(b) << endl;
 	cout << "Balanced tree: " << checktreebalanced(b) << endl;

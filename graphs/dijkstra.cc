@@ -44,7 +44,7 @@ void dijkstra(Graph G, int start){
 	priority_queue<edge> pq;
 	vector<int> parent(G.adj.size(), -1);
 	vector<bool> visited(G.adj.size(), false);
-	//vector of cost insted of single value
+	//vector of cost instead of single value
 	vector<int> cost(G.adj.size(), 0);
 
 	pq.push(edge(start,-1, 0));

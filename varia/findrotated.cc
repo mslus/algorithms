@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <vector>
+#include <gtest/gtest.h>
 
 using namespace std;
 
@@ -40,26 +41,41 @@ int findrotated(const vector<int> &tab, int x){
 }
 
 
+TEST(vectorrotatetest, test1){
+      vector<int> v1({10,12,15,2,5,6,8,9});
+      EXPECT_EQ(1, findrotated(v1,12));	
+}
 
-int main(){
+TEST(vectorrotatetest, test2){
+      vector<int> v1({9,10,12,15,2,5,6,8});
+      EXPECT_EQ(2, findrotated(v1,12));	
+}
 
-	vector<int> v1({10,12,15,2,5,6,8,9});
-	vector<int> v2({9,10,12,15,2,5,6,8});
-	vector<int> v3({8,9,10,12,15,2,5,6});
-	vector<int> v4({6,8,9,10,12,15,2,5});
-	vector<int> v5({12,15,2,5,6,8,9,10});
-	vector<int> v6({15,2,5,6,8,9,10,12});
-	vector<int> v7({2,5,6,8,9,10,12,15});
+TEST(vectorrotatetest, test3){
+      vector<int> v1({8,9,10,12,15,2,5,6});
+      EXPECT_EQ(3, findrotated(v1,12));	
+}
 
-	cout << findrotated(v1,12) << endl;
-	cout << findrotated(v2,12) << endl;
-	cout << findrotated(v3,12) << endl;
-	cout << findrotated(v4,12) << endl;
-	cout << findrotated(v5,12) << endl;
-	cout << findrotated(v6,12) << endl;
-	cout << findrotated(v7,12) << endl;
+TEST(vectorrotatetest, test4){
+      vector<int> v1({6,8,9,10,12,15,2,5});
+      EXPECT_EQ(4, findrotated(v1,12));	
+}
 
-	return 0;
+TEST(vectorrotatetest, test5){
+      vector<int> v1({12,15,2,5,6,8,9,10});
+      EXPECT_EQ(0, findrotated(v1,12));	
+}
+
+TEST(vectorrotatetest, test6){
+      vector<int> v1({15,2,5,6,8,9,10,12});
+      EXPECT_EQ(7, findrotated(v1,12));	
+}
+
+
+int main(int ac, char *av[]){
+
+	testing::InitGoogleTest(&ac, av);
+	return RUN_ALL_TESTS();
 }
 
 

@@ -13,13 +13,13 @@ using namespace std;
 struct node{
 	int info;
 	int left_count;
-	int right_count;
+	int node_count;
 	node *left;
 	node *right;
 	node(int x){
 		info = x;
 		left_count = 0;
-		right_count = 0;
+		node_count = 1;
 		left = nullptr;
 		right = nullptr;
 	}
@@ -43,28 +43,29 @@ void stream::track(int x){
 	}
 
 	node *nn = root;
-	if(nn->info > x){
-		if(nn->left == nullptr){
-			node *mm = new node(x);
-			nn->left = mm;
-			nn->left_count++;
-			return;
+	for(;;){
+		if(nn->info > x){
+			if(nn->left == nullptr){
+				node *mm = new node(x);
+				nn->left = mm;
+				nn->left_count++;
+				return;
+			}else{
+				nn->left_count++;
+				nn = nn->left;
+			}
+		}else if(nn->info < x){
+			if(nn->right == nullptr){
+				node *mm = new node(x);
+				nn->right = mm;
+				return;
+			}else{
+				nn = nn->right;
+			}
 		}else{
-			nn->left_count++;
-			nn = nn->left;
-		}
-	}else if(nn->info > x){
-		if(nn->right == nullptr){
-			node *mm = new node(x);
-			nn->right = mm;
-			nn->right_count++;
+			nn->node_count++;
 			return;
-		}else{
-			nn->right_count++;
-			nn = nn->right;
 		}
-	}else{
-		return;
 	}
 }
 
@@ -74,18 +75,15 @@ int stream::getRankOfNumber(int x){
 	int ile = 0;
 	for(;;){
 		if(nn == nullptr) return ile;
-		if(nn->info == x) return nn->left_count;
+		if(nn->info == x) return ile;
 		if(nn->info > x){
-			cout << "L" << nn->left_count << " ";
-			cout << "R" << nn->right_count << " ";
 			nn = nn->left;
 		}else{
-			ile+=(nn->left_count+1);
-			cout << "L" << nn->left_count << " ";
-			cout << "R" << nn->right_count << " ";
+			ile+=(nn->left_count+nn->node_count);
 			nn = nn->right;
 		}
 	}
+	return 0;
 }
 
 int main(){
@@ -102,6 +100,12 @@ int main(){
 
 	cout << S.getRankOfNumber(1) << endl;
 	cout << S.getRankOfNumber(12) << endl;
+
+	S.track(2);
+	cout << S.getRankOfNumber(11) << endl;
+	cout << S.getRankOfNumber(10) << endl;
+	S.track(9);
+	cout << S.getRankOfNumber(10) << endl;
 
 	return 0;
 }
